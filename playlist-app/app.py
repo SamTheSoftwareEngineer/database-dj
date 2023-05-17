@@ -5,12 +5,14 @@ from models import db, connect_db, Playlist, Song, PlaylistSong
 from forms import NewSongForPlaylistForm, SongForm, PlaylistForm
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///playlist-app'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///playlist-app'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///playlist-app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-connect_db(app)
-db.create_all()
+with app.app_context():
+    connect_db(app)
+    db.create_all()
 
 app.config['SECRET_KEY'] = "I'LL NEVER TELL!!"
 
