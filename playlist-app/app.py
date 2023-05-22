@@ -31,11 +31,8 @@ debug = DebugToolbarExtension(app)
 def root():
     """Homepage: redirect to /playlists."""
     return redirect("/playlists")
-
-
 ##############################################################################
 # Playlist routes
-
 
 @app.route("/playlists")
 def show_all_playlists():
@@ -64,13 +61,15 @@ def add_playlist():
     if form.validate_on_submit():
         name = form.name.data
         description = form.description.data
-        new_playlist = Playlist(name=name, description=description)
-        
-        db.session.add(new_playlist)
+
+        playlist = Playlist(name=name, description=description)
+        db.session.add(playlist)
         db.session.commit()
-        return redirect("/playlists")
-    
-    return render_template("new_playlist.html", form=form)
+        
+        return redirect('/playlists')
+
+    return render_template('new_playlist.html', form=form)
+
 
 ##############################################################################
 # Song routes
@@ -107,6 +106,7 @@ def add_song():
         
         db.session.add(new_song)
         db.session.commit()
+        
         return redirect("/songs")
     
     return render_template("new_song.html", form=form)
