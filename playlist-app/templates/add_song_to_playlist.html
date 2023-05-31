@@ -2,20 +2,22 @@
 
 {% block content %}
 
-<h1>Add a song to {{ playlist.name }}</h1>
+<h1>Add a Song to {{ playlist.name }}</h1>
 
 <form method="POST">
-    {{ form.hidden_tag() }} {% for field in form if field.widget.input_type != 'hidden' %}
+
+  {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ form.song.label(class="form-label") }}
+    {{ form.song(class="form-control") }}
+    {% for error in form.song.errors %}
     
-    {{ field.label }} {{ field }} 
-    
-    {% for error in field.errors %} 
-    {{ error }} 
+    <div class="invalid-feedback">{{ error }}</div>
     {% endfor %}
-    
-    {% endfor %}
-    
-    <button type="Submit" class="btn btn-primary">Add Song to Playlist</button>
-    </form>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Song to Playlist</button>
+</form>
 
 {% endblock %}
